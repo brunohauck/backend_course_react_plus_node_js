@@ -7,23 +7,8 @@ mongoose.connect('mongodb://localhost:27017/cursoreact',{
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-const UserModel  = require('./src/models/user');
-var USERS = [
-    { 'id': 1, 'username': 'brunohauck', 'password': '123456' },
-    { 'id': 2, 'username': 'paul' , 'password': '123456' },
-];
-
-var HELLO = [
-    { 'msg': 'Hello Express' }
-];
-
-function getHello(){
-    return HELLO;
-}
-
-function getUsers(){
-    return USERS;
-}
+//const UserModel  = require('./src/models/user');
+//const ProductModel  = require('./src/models/user');
 
 app.use(bodyParser.json());
 
@@ -32,8 +17,11 @@ app.get('/', function(req, res){
 });
 
 const userRouter = require('./src/routes/user-route');
-
 app.use('/user', userRouter);
+
+const productRouter = require('./src/routes/product-route');
+app.use('/product', productRouter);
+
 
 app.listen(4000, function(){
     console.log('Hello Express Listen on Port 4000');

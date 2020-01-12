@@ -1,8 +1,8 @@
 'use strict'
 
-const repository = require('../repository/user-repository');
+const repository = require('../repository/product-repository');
 
-exports.getAllUsers = async(req, res, next) => {
+exports.getAllProducts = async(req, res, next) => {
     try {
         let dbReturn = await repository.getAll();
         res.status(200).send(dbReturn);        
@@ -15,10 +15,10 @@ exports.getAllUsers = async(req, res, next) => {
     }
 }; 
 
-exports.addUser = async(req, res, next) => {
+exports.addProduct = async(req, res, next) => {
     try {
-        let dbReturnUser = await repository.create(req.body);
-        res.status(200).send(dbReturnUser);        
+        let dbReturnProduct = await repository.create(req.body);
+        res.status(200).send(dbReturnProduct);        
     } catch (e) {
         res.status(500).send(
             {
@@ -28,7 +28,7 @@ exports.addUser = async(req, res, next) => {
     }
 };
 
-exports.editUser = async(req, res, next) => {
+exports.editProduct = async(req, res, next) => {
     try {
         let result = await repository.update(req.params.id, req.body);
         res.status(202).send(result);        
@@ -41,11 +41,11 @@ exports.editUser = async(req, res, next) => {
     }
 };
 
-exports.deleteUser = async(req, res, next) => {
+exports.deleteProduct = async(req, res, next) => {
     try {
         await repository.delete(req.params.id);
         res.status(200).send({
-            message: 'User delete!'
+            message: 'Product delete!'
         });        
     } catch (e) {
         res.status(500).send(
