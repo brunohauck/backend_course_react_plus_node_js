@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 require('../models/user');
 const User = mongoose.model('User');
+const md5 = require('md5');
 const projection = '_id name email creationDate';
 
 exports.getAll = async() => {
@@ -14,13 +15,13 @@ exports.create = async(data) => {
     return await user.save();
 }
 
-exports.update = async(id, data) => {
+exports.update = async(data) => {
     console.log(data);
-    return await User.findByIdAndUpdate(id, {
+    return await User.findByIdAndUpdate(data.id, {
         $set: {
             name: data.name,
             email: data.email,
-            password: data.password,
+            password: md5(data.password + 'd41d8cd98f00b204e9800998ecf8427e|7aef61337bcee2fe773aa78b40afacbc'),
             status: data.status
         }
     });
@@ -38,3 +39,12 @@ exports.deleteLogic = async(id, data) => {
         }
     });
 }
+
+exports.autenticate = async(data) => {
+    console.log(JSON.stringify(data));
+     return await User.findOne(
+         {
+             email: data.email,
+             password: data.password
+         });
+ }
